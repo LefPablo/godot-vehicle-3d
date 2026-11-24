@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dukqx4ywsom2n"]
+
+[ext_resource type="Script" path="res://addons/vehicle_system/runtime/shapecast_vehicle.gd" id="1_vehicle"]
+[ext_resource type="Resource" path="res://vehicles/trailer/trailer.tres" id="2_definition"]
+
+[node name="Trailer" type="RigidBody3D"]
+script = ExtResource("1_vehicle")
+definition = ExtResource("2_definition")
+use_player_input = false

@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://tools/convert_legacy_vehicles.gd" id="1_convert"]
+
+[node name="ConvertLegacyVehicles" type="Node"]
+script = ExtResource("1_convert")

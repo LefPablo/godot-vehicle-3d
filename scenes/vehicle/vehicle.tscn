@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://addons/vehicle_system/runtime/shapecast_vehicle.gd" id="1_vehicle"]
+[ext_resource type="Resource" path="res://vehicles/car/car.tres" id="2_definition"]
+
+[node name="Vehicle" type="RigidBody3D"]
+script = ExtResource("1_vehicle")
+definition = ExtResource("2_definition")

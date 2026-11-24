@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d27ekrdhfcc34"]
+
+[ext_resource type="PackedScene" uid="uid://dsqc6fc0hl81y" path="res://vehicles/pickup/pickup.glb" id="1_502m1"]
+
+[node name="pickup" unique_id=583581686 instance=ExtResource("1_502m1")]
+
+[node name="Cube" parent="." index="0" unique_id=379602118]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Cubo" parent="." index="1" unique_id=461059916]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Cubo_001" parent="." index="2" unique_id=52257273]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Cubo_002" parent="." index="3" unique_id=1030737635]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Cubo_003" parent="." index="4" unique_id=500540486]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Cubo_004" parent="." index="5" unique_id=497417615]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Plane" parent="." index="6" unique_id=652046101]
+transform = Transform3D(-1, -8.742278e-08, 0, 0, 0, -1, 8.742278e-08, -1, 0, 0, 0, 0)

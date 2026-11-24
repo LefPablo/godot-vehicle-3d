@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dvc3jyyxuhfh4"]
+
+[ext_resource type="Script" uid="uid://dps4ewwt2qmbu" path="res://addons/vehicle_system/runtime/shapecast_vehicle.gd" id="1_vehicle"]
+[ext_resource type="Resource" uid="uid://dhja0sxt0n4ox" path="res://vehicles/truck/truck.tres" id="2_definition"]
+
+[node name="Truck" type="RigidBody3D" unique_id=125088208]
+script = ExtResource("1_vehicle")
+definition = ExtResource("2_definition")

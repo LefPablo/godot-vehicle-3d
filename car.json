@@ -1,0 +1,303 @@
+{
+	"format": "shapecast_vehicle",
+	"version": 1,
+	"id": "car",
+	"display_name": "Car",
+	"category": "car",
+	"description": "",
+	"author": "",
+	"player_controllable": true,
+	"model": "car.glb",
+	"model_offset": [
+		0.0,
+		0.0,
+		0.0
+	],
+	"model_rotation_degrees": [
+		0.0,
+		0.0,
+		0.0
+	],
+	"model_scale": [
+		1.0,
+		1.0,
+		1.0
+	],
+	"mass": 1200.0,
+	"center_of_mass": [
+		0.0,
+		-0.15,
+		0.0
+	],
+	"body_friction": 0.4,
+	"collision_layer": 2,
+	"collision_mask": 7,
+	"colliders": [
+		{
+			"name": "ChassisCollision",
+			"shape_type": "box",
+			"position": [
+				0.0,
+				0.15,
+				0.0
+			],
+			"rotation_degrees": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"size": [
+				1.7,
+				0.5,
+				4.0
+			],
+			"radius": 0.5,
+			"height": 1.0,
+			"points": []
+		},
+		{
+			"name": "CabinCollision",
+			"shape_type": "box",
+			"position": [
+				0.0,
+				0.65,
+				0.2
+			],
+			"rotation_degrees": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"size": [
+				1.5,
+				0.5,
+				2.0
+			],
+			"radius": 0.5,
+			"height": 1.0,
+			"points": []
+		}
+	],
+	"auto_collision": "none",
+	"anti_roll_stiffness": 9000.0,
+	"air_drag": 0.4,
+	"engine": {
+		"engine_force": 6500.0,
+		"max_speed_kmh": 130.0,
+		"max_reverse_speed_kmh": 30.0,
+		"power_curve": null,
+		"reverse_force_ratio": 1.0
+	},
+	"brakes": {
+		"brake_force": 3500.0,
+		"handbrake_force": 6000.0
+	},
+	"steering": {
+		"max_steer_angle": 0.5585,
+		"high_speed_steer_angle": 0.157,
+		"high_speed_kmh": 100.0,
+		"steer_speed": 2.5,
+		"steer_return_speed": 4.0,
+		"ackermann": 0.0
+	},
+	"wheels": [
+		{
+			"name": "WheelFL",
+			"position": [
+				-0.98,
+				0.0,
+				-1.35
+			],
+			"mirror": true,
+			"mirror_name": "",
+			"radius": 0.36,
+			"width": 0.26,
+			"shape_segments": 24,
+			"steering": true,
+			"steer_ratio": 1.0,
+			"drive": false,
+			"handbrake": false,
+			"suspension": {
+				"travel": 0.35,
+				"cast_headroom": 0.4,
+				"spring_stiffness": 22000.0,
+				"damping_compression": 1800.0,
+				"damping_rebound": 2600.0,
+				"bump_stop_length": 0.05,
+				"bump_stop_stiffness": 150000.0,
+				"max_damper_speed": 4.0,
+				"contact_normal_influence": 0.5,
+				"hard_contact_strength": 0.5,
+				"hard_contact_correction": 20.0,
+				"max_correction_speed": 3.0,
+				"blocked_push_depth": 0.05
+			},
+			"tire": {
+				"friction": 1.2,
+				"lateral_grip": 0.6,
+				"handbrake_lateral_grip": 0.2,
+				"rolling_resistance": 25.0
+			},
+			"collision_mask": 5,
+			"solid": true,
+			"collider_radius_scale": 0.9,
+			"collider_ground_clearance": 0.08,
+			"visual_scene": null,
+			"model_node": "",
+			"mirror_model_node": "",
+			"visual_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"visual_rotation_degrees": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"auto_center_visual": true,
+			"flip_visual_on_left": true,
+			"sync_visual_every_frame": true,
+			"max_visual_overlift": 0.1
+		},
+		{
+			"name": "WheelRL",
+			"position": [
+				-0.98,
+				0.0,
+				1.3
+			],
+			"mirror": true,
+			"mirror_name": "",
+			"radius": 0.36,
+			"width": 0.26,
+			"shape_segments": 24,
+			"steering": false,
+			"steer_ratio": 1.0,
+			"drive": true,
+			"handbrake": true,
+			"suspension": {
+				"travel": 0.35,
+				"cast_headroom": 0.4,
+				"spring_stiffness": 22000.0,
+				"damping_compression": 1800.0,
+				"damping_rebound": 2600.0,
+				"bump_stop_length": 0.05,
+				"bump_stop_stiffness": 150000.0,
+				"max_damper_speed": 4.0,
+				"contact_normal_influence": 0.5,
+				"hard_contact_strength": 0.5,
+				"hard_contact_correction": 20.0,
+				"max_correction_speed": 3.0,
+				"blocked_push_depth": 0.05
+			},
+			"tire": {
+				"friction": 1.2,
+				"lateral_grip": 0.6,
+				"handbrake_lateral_grip": 0.2,
+				"rolling_resistance": 25.0
+			},
+			"collision_mask": 5,
+			"solid": true,
+			"collider_radius_scale": 0.9,
+			"collider_ground_clearance": 0.08,
+			"visual_scene": null,
+			"model_node": "",
+			"mirror_model_node": "",
+			"visual_offset": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"visual_rotation_degrees": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"auto_center_visual": true,
+			"flip_visual_on_left": true,
+			"sync_visual_every_frame": true,
+			"max_visual_overlift": 0.1
+		}
+	],
+	"mount_points": [
+		{
+			"kind": "tow_hook_front",
+			"name": "",
+			"position": [
+				0.0,
+				0.02,
+				-2.07
+			],
+			"rotation_degrees": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"marker_size": [
+				0.12,
+				0.1,
+				0.14
+			],
+			"marker_color": [
+				0.15,
+				0.15,
+				0.16,
+				1.0
+			]
+		},
+		{
+			"kind": "tow_hitch_rear",
+			"name": "",
+			"position": [
+				0.0,
+				0.02,
+				2.07
+			],
+			"rotation_degrees": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"marker_size": [
+				0.12,
+				0.1,
+				0.14
+			],
+			"marker_color": [
+				0.15,
+				0.15,
+				0.16,
+				1.0
+			]
+		},
+		{
+			"kind": "driver_exit",
+			"name": "",
+			"position": [
+				-1.5,
+				0.0,
+				-0.2
+			],
+			"rotation_degrees": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"marker_size": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"marker_color": [
+				0.15,
+				0.15,
+				0.16,
+				1.0
+			]
+		}
+	],
+	"cargo": null,
+	"camera_distance": 7.5,
+	"camera_look_height": 0.6
+}

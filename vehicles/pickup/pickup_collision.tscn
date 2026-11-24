@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cvmv38ykhobk8"]
+
+[ext_resource type="Script" uid="uid://btexjh4g8pusw" path="res://addons/vehicle_system/runtime/vehicle_collision_shapes.gd" id="1_shapes"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mel2l"]
+size = Vector3(0.13269043, 0.7958374, 3.9143066)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4r2t2"]
+size = Vector3(2.3031616, 0.15784863, 3.9143066)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_502m1"]
+size = Vector3(0.13269043, 0.7958374, 3.9143066)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v2ord"]
+size = Vector3(2.3065796, 0.7826843, 0.12506104)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5sjhi"]
+size = Vector3(2.3065796, 1.3953705, 2.0810852)
+
+[node name="PickupCollision" type="Node3D" unique_id=731005095]
+script = ExtResource("1_shapes")
+reference_definition = "uid://cwkue53m63xrn"
+show_reference = false
+
+[node name="BedSideLCollision" type="CollisionShape3D" parent="." unique_id=1358505689]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1293781, 1.1672561, 1.2843683)
+shape = SubResource("BoxShape3D_mel2l")
+
+[node name="BedSideLCollision2" type="CollisionShape3D" parent="." unique_id=553026138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.044142485, 0.74785817, 1.2843683)
+shape = SubResource("BoxShape3D_4r2t2")
+
+[node name="BedSideRCollision" type="CollisionShape3D" parent="." unique_id=306664083]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0631998, 1.1672561, 1.2843683)
+shape = SubResource("BoxShape3D_502m1")
+
+[node name="TailgateCollision" type="CollisionShape3D" parent="." unique_id=291318592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.023744822, 1.1606796, 3.178991)
+shape = SubResource("BoxShape3D_v2ord")
+
+[node name="CabCollision" type="CollisionShape3D" parent="." unique_id=294997627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.023744822, 1.4670227, -0.5180497)
+shape = SubResource("BoxShape3D_5sjhi")

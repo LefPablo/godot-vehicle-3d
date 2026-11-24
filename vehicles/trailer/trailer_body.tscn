@@ -1,0 +1,102 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.45, 0.35, 0.25, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_floor"]
+material = SubResource("Mat_floor")
+size = Vector3(1.98, 0.08, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_paint"]
+albedo_color = Color(0.2, 0.55, 0.3, 1)
+metallic = 0.3
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="Mesh_side"]
+material = SubResource("Mat_paint")
+size = Vector3(0.08, 0.45, 3)
+
+[sub_resource type="BoxMesh" id="Mesh_end"]
+material = SubResource("Mat_paint")
+size = Vector3(1.98, 0.45, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_steel"]
+albedo_color = Color(0.15, 0.15, 0.16, 1)
+metallic = 0.8
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="Mesh_drawbar"]
+material = SubResource("Mat_steel")
+size = Vector3(0.12, 0.1, 1.5)
+
+[sub_resource type="BoxMesh" id="Mesh_jack"]
+material = SubResource("Mat_steel")
+size = Vector3(0.08, 0.43, 0.08)
+
+[sub_resource type="BoxMesh" id="Mesh_jack_foot"]
+material = SubResource("Mat_steel")
+size = Vector3(0.18, 0.03, 0.18)
+
+[sub_resource type="BoxMesh" id="Mesh_fender"]
+material = SubResource("Mat_paint")
+size = Vector3(0.3, 0.05, 0.85)
+
+[sub_resource type="StandardMaterial3D" id="Mat_taillight"]
+albedo_color = Color(0.8, 0.05, 0.05, 1)
+emission_enabled = true
+emission = Color(1, 0.1, 0.05, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_taillight"]
+material = SubResource("Mat_taillight")
+size = Vector3(0.25, 0.1, 0.04)
+
+[node name="Body" type="Node3D" unique_id=877578610]
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1378804648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="SideL" type="MeshInstance3D" parent="." unique_id=1400564812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.95, 0.315, 0)
+mesh = SubResource("Mesh_side")
+
+[node name="SideR" type="MeshInstance3D" parent="." unique_id=1041924313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 0.315, 0)
+mesh = SubResource("Mesh_side")
+
+[node name="Front" type="MeshInstance3D" parent="." unique_id=1700059287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.315, -1.46)
+mesh = SubResource("Mesh_end")
+
+[node name="Tail" type="MeshInstance3D" parent="." unique_id=574962168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.315, 1.46)
+mesh = SubResource("Mesh_end")
+
+[node name="Drawbar" type="MeshInstance3D" parent="." unique_id=1919724711]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -2.25)
+mesh = SubResource("Mesh_drawbar")
+
+[node name="Jack" type="MeshInstance3D" parent="." unique_id=144974002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.215, -2.7)
+mesh = SubResource("Mesh_jack")
+
+[node name="JackFoot" type="MeshInstance3D" parent="." unique_id=1464651358]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.415, -2.7)
+mesh = SubResource("Mesh_jack_foot")
+
+[node name="FenderL" type="MeshInstance3D" parent="." unique_id=857698940]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0.4, 0.15)
+mesh = SubResource("Mesh_fender")
+
+[node name="FenderR" type="MeshInstance3D" parent="." unique_id=982387242]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0.4, 0.15)
+mesh = SubResource("Mesh_fender")
+
+[node name="TaillightL" type="MeshInstance3D" parent="." unique_id=401018270]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.35, 1.51)
+mesh = SubResource("Mesh_taillight")
+
+[node name="TaillightR" type="MeshInstance3D" parent="." unique_id=1268780340]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0.35, 1.51)
+mesh = SubResource("Mesh_taillight")

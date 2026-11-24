@@ -1,0 +1,117 @@
+[gd_resource type="Resource" script_class="VehicleDefinition" format=3 uid="uid://cwkue53m63xrn"]
+
+[ext_resource type="Script" uid="uid://dixb1yrtbw2us" path="res://addons/vehicle_system/config/vehicle_brake_config.gd" id="1_gss7f"]
+[ext_resource type="Script" uid="uid://dqlfa7en1skt4" path="res://addons/vehicle_system/config/vehicle_cargo_space.gd" id="2_402ha"]
+[ext_resource type="Script" uid="uid://cchm1k6aoe4up" path="res://addons/vehicle_system/config/vehicle_collider_config.gd" id="2_wij6k"]
+[ext_resource type="Script" uid="uid://bpo1hdnnf5des" path="res://addons/vehicle_system/config/vehicle_engine_config.gd" id="3_402ha"]
+[ext_resource type="Script" uid="uid://c0uc6dafevbdy" path="res://addons/vehicle_system/config/vehicle_mount_point.gd" id="4_mxt7u"]
+[ext_resource type="PackedScene" uid="uid://d27ekrdhfcc34" path="res://vehicles/pickup/pickup.tscn" id="4_wij6k"]
+[ext_resource type="Script" uid="uid://clmmpdiohuc3g" path="res://addons/vehicle_system/config/vehicle_definition.gd" id="5_eif78"]
+[ext_resource type="Script" uid="uid://bkgpafp2dy0eg" path="res://addons/vehicle_system/config/vehicle_steering_config.gd" id="6_ceu8w"]
+[ext_resource type="Script" uid="uid://da6ciycyan7kr" path="res://addons/vehicle_system/config/vehicle_wheel_config.gd" id="7_v3h2s"]
+[ext_resource type="Script" uid="uid://cba6kf4pyj5qv" path="res://addons/vehicle_system/config/vehicle_suspension_config.gd" id="8_ptvj0"]
+[ext_resource type="Script" uid="uid://b7ch7ipu7jd11" path="res://addons/vehicle_system/config/vehicle_tire_config.gd" id="9_nqj4o"]
+[ext_resource type="Script" uid="uid://bbob2vxpkp5qn" path="res://addons/vehicle_system/config/vehicle_cargo_load.gd" id="10_load"]
+[ext_resource type="PackedScene" uid="uid://cvmv38ykhobk8" path="res://vehicles/pickup/pickup_collision.tscn" id="11_collision"]
+
+[sub_resource type="Resource" id="Resource_lyirm"]
+script = ExtResource("1_gss7f")
+
+[sub_resource type="Resource" id="Resource_load"]
+script = ExtResource("10_load")
+box_size = Vector3(0.52, 0.805, 0.6)
+
+[sub_resource type="Resource" id="Resource_402ha"]
+script = ExtResource("2_402ha")
+position = Vector3(0, 0.61, 2.035)
+size = Vector3(1.9, 1.18, 2.49)
+accepted_tags = PackedStringArray()
+open_top = true
+max_overhang_height = 1.6
+initial_load = SubResource("Resource_load")
+
+[sub_resource type="Resource" id="Resource_7iffc"]
+script = ExtResource("3_402ha")
+
+[sub_resource type="Resource" id="Resource_3walb"]
+script = ExtResource("4_mxt7u")
+kind = 0
+position = Vector3(0, 0.02, -2.07)
+marker_size = Vector3(0.12, 0.1, 0.14)
+
+[sub_resource type="Resource" id="Resource_vli3x"]
+script = ExtResource("4_mxt7u")
+kind = 1
+position = Vector3(0, 0.02, 2.07)
+marker_size = Vector3(0.12, 0.1, 0.14)
+marker_color = Color(0.76925117, 0.360975, 0.2769412, 1)
+
+[sub_resource type="Resource" id="Resource_bk6oc"]
+script = ExtResource("4_mxt7u")
+kind = 3
+position = Vector3(-1.5, 0, -0.2)
+
+[sub_resource type="Resource" id="Resource_oxg4o"]
+script = ExtResource("6_ceu8w")
+
+[sub_resource type="Resource" id="Resource_lun81"]
+script = ExtResource("8_ptvj0")
+
+[sub_resource type="Resource" id="Resource_d32kr"]
+script = ExtResource("9_nqj4o")
+
+[sub_resource type="Resource" id="Resource_gg3d5"]
+script = ExtResource("7_v3h2s")
+name = "WheelFL"
+position = Vector3(-0.98, 0, -1.955)
+mirror = true
+steering = true
+suspension = SubResource("Resource_lun81")
+tire = SubResource("Resource_d32kr")
+
+[sub_resource type="Resource" id="Resource_jj5fo"]
+script = ExtResource("8_ptvj0")
+
+[sub_resource type="Resource" id="Resource_cb2uu"]
+script = ExtResource("9_nqj4o")
+
+[sub_resource type="Resource" id="Resource_wqdek"]
+script = ExtResource("7_v3h2s")
+name = "WheelRL"
+position = Vector3(-0.98, 0, 2.17)
+mirror = true
+drive = true
+handbrake = true
+suspension = SubResource("Resource_jj5fo")
+tire = SubResource("Resource_cb2uu")
+
+[sub_resource type="Resource" id="Resource_eif78"]
+script = ExtResource("8_ptvj0")
+
+[sub_resource type="Resource" id="Resource_ceu8w"]
+script = ExtResource("9_nqj4o")
+
+[sub_resource type="Resource" id="Resource_4r2t2"]
+script = ExtResource("7_v3h2s")
+position = Vector3(-1.09, 0, 0)
+mirror = true
+steering = true
+steer_ratio = 0.5800000000000001
+suspension = SubResource("Resource_eif78")
+tire = SubResource("Resource_ceu8w")
+metadata/_custom_type_script = "uid://da6ciycyan7kr"
+
+[resource]
+script = ExtResource("5_eif78")
+id = "pickup"
+display_name = "Pickup"
+model = ExtResource("4_wij6k")
+model_offset = Vector3(0, -0.575, 0)
+collision_scene = ExtResource("11_collision")
+collision_scene_in_model_space = true
+engine = SubResource("Resource_7iffc")
+brakes = SubResource("Resource_lyirm")
+steering = SubResource("Resource_oxg4o")
+wheels = Array[ExtResource("7_v3h2s")]([SubResource("Resource_gg3d5"), SubResource("Resource_wqdek"), SubResource("Resource_4r2t2")])
+mount_points = Array[ExtResource("4_mxt7u")]([SubResource("Resource_3walb"), SubResource("Resource_vli3x"), SubResource("Resource_bk6oc")])
+cargo_spaces = Array[ExtResource("2_402ha")]([SubResource("Resource_402ha")])

@@ -1,0 +1,66 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/character/player_character.gd" id="1_character"]
+
+[sub_resource type="CapsuleShape3D" id="Shape_body"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_suit"]
+albedo_color = Color(0.95, 0.55, 0.15, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_skin"]
+albedo_color = Color(0.93, 0.78, 0.65, 1)
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="Mat_dark"]
+albedo_color = Color(0.12, 0.12, 0.14, 1)
+roughness = 0.6
+
+[sub_resource type="CapsuleMesh" id="Mesh_body"]
+material = SubResource("Mat_suit")
+radius = 0.3
+height = 1.45
+
+[sub_resource type="SphereMesh" id="Mesh_head"]
+material = SubResource("Mat_skin")
+radius = 0.19
+height = 0.38
+
+[sub_resource type="BoxMesh" id="Mesh_nose"]
+material = SubResource("Mat_dark")
+size = Vector3(0.22, 0.07, 0.08)
+
+[sub_resource type="BoxMesh" id="Mesh_backpack"]
+material = SubResource("Mat_dark")
+size = Vector3(0.4, 0.45, 0.16)
+
+[node name="Character" type="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 7
+floor_max_angle = 0.87
+floor_snap_length = 0.3
+script = ExtResource("1_character")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+position = Vector3(0, 0.9, 0)
+shape = SubResource("Shape_body")
+
+[node name="Model" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Model"]
+position = Vector3(0, 0.73, 0)
+mesh = SubResource("Mesh_body")
+
+[node name="Head" type="MeshInstance3D" parent="Model"]
+position = Vector3(0, 1.6, 0)
+mesh = SubResource("Mesh_head")
+
+[node name="Visor" type="MeshInstance3D" parent="Model"]
+position = Vector3(0, 1.63, -0.16)
+mesh = SubResource("Mesh_nose")
+
+[node name="Backpack" type="MeshInstance3D" parent="Model"]
+position = Vector3(0, 1.05, 0.33)
+mesh = SubResource("Mesh_backpack")

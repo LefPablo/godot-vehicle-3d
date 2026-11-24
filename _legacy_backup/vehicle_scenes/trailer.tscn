@@ -1,0 +1,229 @@
+[gd_scene format=3 uid="uid://dukqx4ywsom2n"]
+
+[ext_resource type="Script" uid="uid://dps4ewwt2qmbu" path="res://scripts/vehicle/shapecast_vehicle.gd" id="1_vehicle"]
+[ext_resource type="Script" uid="uid://bf3lcflugll0c" path="res://scripts/vehicle/shapecast_wheel.gd" id="2_wheel"]
+[ext_resource type="Script" uid="uid://dhkdmigxe3b3i" path="res://scripts/vehicle/cargo_load.gd" id="3_cargo"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_body"]
+friction = 0.8
+
+[sub_resource type="BoxShape3D" id="Shape_floor"]
+size = Vector3(1.98, 0.08, 3)
+
+[sub_resource type="BoxShape3D" id="Shape_side"]
+size = Vector3(0.08, 0.45, 3)
+
+[sub_resource type="BoxShape3D" id="Shape_end"]
+size = Vector3(1.98, 0.45, 0.08)
+
+[sub_resource type="BoxShape3D" id="Shape_drawbar"]
+size = Vector3(0.12, 0.1, 1.5)
+
+[sub_resource type="BoxShape3D" id="Shape_jack"]
+size = Vector3(0.12, 0.43, 0.12)
+
+[sub_resource type="StandardMaterial3D" id="Mat_floor"]
+albedo_color = Color(0.45, 0.35, 0.25, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh_floor"]
+material = SubResource("Mat_floor")
+size = Vector3(1.98, 0.08, 3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_paint"]
+albedo_color = Color(0.2, 0.55, 0.3, 1)
+metallic = 0.3
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="Mesh_side"]
+material = SubResource("Mat_paint")
+size = Vector3(0.08, 0.45, 3)
+
+[sub_resource type="BoxMesh" id="Mesh_end"]
+material = SubResource("Mat_paint")
+size = Vector3(1.98, 0.45, 0.08)
+
+[sub_resource type="StandardMaterial3D" id="Mat_steel"]
+albedo_color = Color(0.15, 0.15, 0.16, 1)
+metallic = 0.8
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="Mesh_drawbar"]
+material = SubResource("Mat_steel")
+size = Vector3(0.12, 0.1, 1.5)
+
+[sub_resource type="BoxMesh" id="Mesh_jack"]
+material = SubResource("Mat_steel")
+size = Vector3(0.08, 0.43, 0.08)
+
+[sub_resource type="BoxMesh" id="Mesh_jack_foot"]
+material = SubResource("Mat_steel")
+size = Vector3(0.18, 0.03, 0.18)
+
+[sub_resource type="BoxMesh" id="Mesh_fender"]
+material = SubResource("Mat_paint")
+size = Vector3(0.3, 0.05, 0.85)
+
+[sub_resource type="StandardMaterial3D" id="Mat_taillight"]
+albedo_color = Color(0.8, 0.05, 0.05, 1)
+emission_enabled = true
+emission = Color(1, 0.1, 0.05, 1)
+
+[sub_resource type="BoxMesh" id="Mesh_taillight"]
+material = SubResource("Mat_taillight")
+size = Vector3(0.25, 0.1, 0.04)
+
+[sub_resource type="BoxMesh" id="Mesh_coupler"]
+material = SubResource("Mat_steel")
+size = Vector3(0.16, 0.12, 0.22)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_n28xe"]
+points = PackedVector3Array(-0.11, 0.73070806, 0, 0.11, 0.73070806, 0, -0.11, 0.71943945, 0.085593544, 0.11, 0.71943945, 0.085593544, -0.11, 0.6864016, 0.16535403, 0.11, 0.6864016, 0.16535403, -0.11, 0.6338459, 0.23384592, 0.11, 0.6338459, 0.23384592, -0.11, 0.56535405, 0.2864016, 0.11, 0.56535405, 0.2864016, -0.11, 0.48559356, 0.31943947, 0.11, 0.48559356, 0.31943947, -0.11, 0.4, 0.33070806, 0.11, 0.4, 0.33070806, -0.11, 0.31440645, 0.31943947, 0.11, 0.31440645, 0.31943947, -0.11, 0.23464596, 0.2864016, 0.11, 0.23464596, 0.2864016, -0.11, 0.16615409, 0.23384592, 0.11, 0.16615409, 0.23384592, -0.11, 0.11359841, 0.16535403, 0.11, 0.11359841, 0.16535403, -0.11, 0.080560535, 0.085593544, 0.11, 0.080560535, 0.085593544, -0.11, 0.06929193, 4.049872e-17, 0.11, 0.06929193, 4.049872e-17, -0.11, 0.080560535, -0.085593544, 0.11, 0.080560535, -0.085593544, -0.11, 0.11359841, -0.16535403, 0.11, 0.11359841, -0.16535403, -0.11, 0.16615409, -0.23384592, 0.11, 0.16615409, -0.23384592, -0.11, 0.23464596, -0.2864016, 0.11, 0.23464596, -0.2864016, -0.11, 0.31440645, -0.31943947, 0.11, 0.31440645, -0.31943947, -0.11, 0.4, -0.33070806, 0.11, 0.4, -0.33070806, -0.11, 0.48559356, -0.31943947, 0.11, 0.48559356, -0.31943947, -0.11, 0.56535405, -0.2864016, 0.11, 0.56535405, -0.2864016, -0.11, 0.6338459, -0.23384592, 0.11, 0.6338459, -0.23384592, -0.11, 0.6864016, -0.16535403, 0.11, 0.6864016, -0.16535403, -0.11, 0.71943945, -0.085593544, 0.11, 0.71943945, -0.085593544)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wd8fa"]
+points = PackedVector3Array(-0.11, 0.73070806, 0, 0.11, 0.73070806, 0, -0.11, 0.71943945, 0.085593544, 0.11, 0.71943945, 0.085593544, -0.11, 0.6864016, 0.16535403, 0.11, 0.6864016, 0.16535403, -0.11, 0.6338459, 0.23384592, 0.11, 0.6338459, 0.23384592, -0.11, 0.56535405, 0.2864016, 0.11, 0.56535405, 0.2864016, -0.11, 0.48559356, 0.31943947, 0.11, 0.48559356, 0.31943947, -0.11, 0.4, 0.33070806, 0.11, 0.4, 0.33070806, -0.11, 0.31440645, 0.31943947, 0.11, 0.31440645, 0.31943947, -0.11, 0.23464596, 0.2864016, 0.11, 0.23464596, 0.2864016, -0.11, 0.16615409, 0.23384592, 0.11, 0.16615409, 0.23384592, -0.11, 0.11359841, 0.16535403, 0.11, 0.11359841, 0.16535403, -0.11, 0.080560535, 0.085593544, 0.11, 0.080560535, 0.085593544, -0.11, 0.06929193, 4.049872e-17, 0.11, 0.06929193, 4.049872e-17, -0.11, 0.080560535, -0.085593544, 0.11, 0.080560535, -0.085593544, -0.11, 0.11359841, -0.16535403, 0.11, 0.11359841, -0.16535403, -0.11, 0.16615409, -0.23384592, 0.11, 0.16615409, -0.23384592, -0.11, 0.23464596, -0.2864016, 0.11, 0.23464596, -0.2864016, -0.11, 0.31440645, -0.31943947, 0.11, 0.31440645, -0.31943947, -0.11, 0.4, -0.33070806, 0.11, 0.4, -0.33070806, -0.11, 0.48559356, -0.31943947, 0.11, 0.48559356, -0.31943947, -0.11, 0.56535405, -0.2864016, 0.11, 0.56535405, -0.2864016, -0.11, 0.6338459, -0.23384592, 0.11, 0.6338459, -0.23384592, -0.11, 0.6864016, -0.16535403, 0.11, 0.6864016, -0.16535403, -0.11, 0.71943945, -0.085593544, 0.11, 0.71943945, -0.085593544)
+
+[node name="Trailer" type="RigidBody3D" unique_id=1109559732]
+collision_layer = 2
+collision_mask = 7
+mass = 450.0
+physics_material_override = SubResource("PhysicsMaterial_body")
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, 0.05, -0.35)
+can_sleep = false
+script = ExtResource("1_vehicle")
+use_player_input = false
+camera_distance = 9.0
+engine_force = 0.0
+brake_force = 1500.0
+handbrake_force = 3000.0
+anti_roll_stiffness = 6000.0
+air_drag = 0.3
+
+[node name="FloorCollision" type="CollisionShape3D" parent="." unique_id=1643303155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("Shape_floor")
+
+[node name="SideLCollision" type="CollisionShape3D" parent="." unique_id=1100546481]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.95, 0.315, 0)
+shape = SubResource("Shape_side")
+
+[node name="SideRCollision" type="CollisionShape3D" parent="." unique_id=1707049003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 0.315, 0)
+shape = SubResource("Shape_side")
+
+[node name="FrontCollision" type="CollisionShape3D" parent="." unique_id=1908172453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.315, -1.46)
+shape = SubResource("Shape_end")
+
+[node name="TailCollision" type="CollisionShape3D" parent="." unique_id=1412668160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.315, 1.46)
+shape = SubResource("Shape_end")
+
+[node name="DrawbarCollision" type="CollisionShape3D" parent="." unique_id=586698141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -2.25)
+shape = SubResource("Shape_drawbar")
+
+[node name="JackCollision" type="CollisionShape3D" parent="." unique_id=439658698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.215, -2.7)
+shape = SubResource("Shape_jack")
+
+[node name="Body" type="Node3D" parent="." unique_id=875764007]
+
+[node name="Floor" type="MeshInstance3D" parent="Body" unique_id=1810183954]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+mesh = SubResource("Mesh_floor")
+
+[node name="SideL" type="MeshInstance3D" parent="Body" unique_id=708815084]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.95, 0.315, 0)
+mesh = SubResource("Mesh_side")
+
+[node name="SideR" type="MeshInstance3D" parent="Body" unique_id=1349138752]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.95, 0.315, 0)
+mesh = SubResource("Mesh_side")
+
+[node name="Front" type="MeshInstance3D" parent="Body" unique_id=743575133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.315, -1.46)
+mesh = SubResource("Mesh_end")
+
+[node name="Tail" type="MeshInstance3D" parent="Body" unique_id=1018963438]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.315, 1.46)
+mesh = SubResource("Mesh_end")
+
+[node name="Drawbar" type="MeshInstance3D" parent="Body" unique_id=1414316455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -2.25)
+mesh = SubResource("Mesh_drawbar")
+
+[node name="Jack" type="MeshInstance3D" parent="Body" unique_id=1684928241]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.215, -2.7)
+mesh = SubResource("Mesh_jack")
+
+[node name="JackFoot" type="MeshInstance3D" parent="Body" unique_id=2031601391]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.415, -2.7)
+mesh = SubResource("Mesh_jack_foot")
+
+[node name="FenderL" type="MeshInstance3D" parent="Body" unique_id=1538825336]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0.4, 0.15)
+mesh = SubResource("Mesh_fender")
+
+[node name="FenderR" type="MeshInstance3D" parent="Body" unique_id=596011119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0.4, 0.15)
+mesh = SubResource("Mesh_fender")
+
+[node name="TaillightL" type="MeshInstance3D" parent="Body" unique_id=1595802212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 0.35, 1.51)
+mesh = SubResource("Mesh_taillight")
+
+[node name="TaillightR" type="MeshInstance3D" parent="Body" unique_id=586760710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0.35, 1.51)
+mesh = SubResource("Mesh_taillight")
+
+[node name="Coupler" type="Marker3D" parent="." unique_id=594898985]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, -3.05)
+
+[node name="Mesh" type="MeshInstance3D" parent="Coupler" unique_id=364553177]
+mesh = SubResource("Mesh_coupler")
+
+[node name="Cargo" type="Node3D" parent="." unique_id=24180318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09, 0)
+script = ExtResource("3_cargo")
+rows = 4
+extra_top_boxes = 2
+bed_half_extents = Vector3(0.9, 1.2, 1.42)
+random_seed = 21
+
+[node name="WheelL" type="ShapeCast3D" parent="." unique_id=281942016]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 0.15)
+shape = SubResource("ConvexPolygonShape3D_n28xe")
+target_position = Vector3(0, -0.7, 0)
+max_results = 4
+collision_mask = 5
+script = ExtResource("2_wheel")
+wheel_radius = 0.33
+wheel_width = 0.22
+is_steering = true
+is_drive = true
+has_handbrake = true
+suspension_travel = 0.3
+spring_stiffness = 26000.0
+damping_compression = 1700.0
+damping_rebound = 2400.0
+tire_friction = 1.1
+
+[node name="WheelR" type="ShapeCast3D" parent="." unique_id=1169888638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 0.15)
+shape = SubResource("ConvexPolygonShape3D_wd8fa")
+target_position = Vector3(0, -0.7, 0)
+max_results = 4
+collision_mask = 5
+script = ExtResource("2_wheel")
+wheel_radius = 0.33
+wheel_width = 0.22
+is_steering = true
+is_drive = true
+has_handbrake = true
+suspension_travel = 0.3
+spring_stiffness = 26000.0
+damping_compression = 1700.0
+damping_rebound = 2400.0
+tire_friction = 1.1

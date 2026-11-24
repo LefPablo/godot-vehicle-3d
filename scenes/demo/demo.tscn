@@ -1,0 +1,806 @@
+[gd_scene format=3 uid="uid://7ojx57bhh6p3"]
+
+[ext_resource type="PackedScene" path="res://scenes/vehicle/vehicle.tscn" id="1_vehicle"]
+[ext_resource type="Script" uid="uid://2xlu8l40n5q" path="res://scripts/camera/follow_camera.gd" id="2_camera"]
+[ext_resource type="Script" uid="uid://c88i857ervqyf" path="res://scripts/ui/vehicle_hud.gd" id="3_hud"]
+[ext_resource type="Shader" uid="uid://cd153blqa60w0" path="res://materials/grid.gdshader" id="4_grid"]
+[ext_resource type="PackedScene" uid="uid://dvc3jyyxuhfh4" path="res://scenes/vehicle/truck.tscn" id="5_truck"]
+[ext_resource type="Script" uid="uid://b8iegmsw2lo8u" path="res://scripts/vehicle/vehicle_switcher.gd" id="6_switcher"]
+[ext_resource type="Script" uid="uid://cfpjiss0ax3x0" path="res://scripts/vehicle/tow_manager.gd" id="7_tow"]
+[ext_resource type="PackedScene" uid="uid://dukqx4ywsom2n" path="res://scenes/vehicle/trailer.tscn" id="8_trailer"]
+[ext_resource type="PackedScene" path="res://scenes/character/character.tscn" id="9_character"]
+[ext_resource type="Script" uid="uid://b8bbe2fh6j0pe" path="res://scripts/vehicle/vehicle_spawner.gd" id="10_spawner"]
+[ext_resource type="Script" uid="uid://dps4ewwt2qmbu" path="res://addons/vehicle_system/runtime/shapecast_vehicle.gd" id="11_rskw5"]
+[ext_resource type="Resource" uid="uid://cwkue53m63xrn" path="res://vehicles/pickup/pickup.tres" id="12_dt4c4"]
+[ext_resource type="Script" uid="uid://bxeq2rujffbpg" path="res://addons/vehicle_system/roads/vehicle_road.gd" id="13_road"]
+[ext_resource type="Script" uid="uid://cxsa78pgnl7p0" path="res://addons/vehicle_system/ai/vehicle_ai_driver.gd" id="14_ai"]
+[ext_resource type="Script" uid="uid://di57dmi3gxt1q" path="res://scripts/demo/ai_driver_toggle.gd" id="15_toggle"]
+[ext_resource type="Script" uid="uid://dcoui36b0qgax" path="res://addons/vehicle_system/roads/vehicle_road_junction.gd" id="16_junction"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMat"]
+sky_horizon_color = Color(0.66, 0.68, 0.72, 1)
+ground_horizon_color = Color(0.66, 0.68, 0.72, 1)
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMat")
+
+[sub_resource type="Environment" id="Env"]
+background_mode = 2
+sky = SubResource("Sky")
+tonemap_mode = 2
+ssao_enabled = true
+
+[sub_resource type="ShaderMaterial" id="GroundMat"]
+render_priority = 0
+shader = ExtResource("4_grid")
+shader_parameter/base_color = Color(0.36, 0.4, 0.34, 1)
+shader_parameter/line_color = Color(0.27, 0.3, 0.26, 1)
+shader_parameter/grid_size = 2.0
+shader_parameter/line_width = 0.05
+shader_parameter/roughness_value = 0.9
+
+[sub_resource type="ShaderMaterial" id="WallMat"]
+render_priority = 0
+shader = ExtResource("4_grid")
+shader_parameter/base_color = Color(0.5, 0.45, 0.4, 1)
+shader_parameter/line_color = Color(0.35, 0.3, 0.27, 1)
+shader_parameter/grid_size = 1.0
+shader_parameter/line_width = 0.03
+shader_parameter/roughness_value = 0.9
+
+[sub_resource type="ShaderMaterial" id="BumpMat"]
+render_priority = 0
+shader = ExtResource("4_grid")
+shader_parameter/base_color = Color(0.9, 0.62, 0.15, 1)
+shader_parameter/line_color = Color(0.55, 0.35, 0.08, 1)
+shader_parameter/grid_size = 0.5
+shader_parameter/line_width = 0.02
+shader_parameter/roughness_value = 0.8
+
+[sub_resource type="ShaderMaterial" id="PitMat"]
+render_priority = 0
+shader = ExtResource("4_grid")
+shader_parameter/base_color = Color(0.25, 0.2, 0.17, 1)
+shader_parameter/line_color = Color(0.15, 0.12, 0.1, 1)
+shader_parameter/grid_size = 0.5
+shader_parameter/line_width = 0.02
+shader_parameter/roughness_value = 0.95
+
+[sub_resource type="ShaderMaterial" id="RampMat"]
+render_priority = 0
+shader = ExtResource("4_grid")
+shader_parameter/base_color = Color(0.55, 0.57, 0.62, 1)
+shader_parameter/line_color = Color(0.38, 0.4, 0.45, 1)
+shader_parameter/grid_size = 1.0
+shader_parameter/line_width = 0.03
+shader_parameter/roughness_value = 0.85
+
+[sub_resource type="Curve3D" id="Curve3D_outer"]
+_data = {
+"points": PackedVector3Array(0, 0, 5, 0, 0, -5, 55, 0, -88, 0, 0, 9.94, 0, 0, -9.94, 55, 0, -107, 9.94, 0, 0, -9.94, 0, 0, 37, 0, -125, 9.94, 0, 0, -9.94, 0, 0, -37, 0, -125, 0, 0, -9.94, 0, 0, 9.94, -55, 0, -107, 0, 0, -9.94, 0, 0, 9.94, -55, 0, 17, -9.94, 0, 0, 9.94, 0, 0, -37, 0, 35, -9.94, 0, 0, 9.94, 0, 0, 37, 0, 35, 0, 0, 9.94, 0, 0, -9.94, 55, 0, 17, 0, 0, 5, 0, 0, -5, 55, 0, -12),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 10
+
+[sub_resource type="Curve3D" id="Curve3D_link"]
+_data = {
+"points": PackedVector3Array(0, 0, 5, 0, 0, -5, 55, 0, -28, 0, 0, 5, 0, 0, -5, 55, 0, -72),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve3D" id="Curve3D_west"]
+_data = {
+"points": PackedVector3Array(3.87, 0, 0, -3.87, 0, 0, 47, 0, -20, 0, 0, 3.87, 0, 0, -3.87, 40, 0, -27, 0, 0, 3.87, 0, 0, -3.87, 40, 0, -73, -3.87, 0, 0, 3.87, 0, 0, 47, 0, -80),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Curve3D" id="Curve3D_east"]
+_data = {
+"points": PackedVector3Array(-4.97, 0, 0, 4.97, 0, 0, 63, 0, -20, 0, 0, 4.97, 0, 0, -4.97, 72, 0, -29, 0, 0, 4.97, 0, 0, -4.97, 72, 0, -71, 4.97, 0, 0, -4.97, 0, 0, 63, 0, -80),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[node name="Demo" type="Node3D" unique_id=1223087331]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1530267464]
+environment = SubResource("Env")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1516871157]
+transform = Transform3D(0.81915206, -0.43938506, 0.36868784, 0, 0.64278764, 0.76604444, -0.57357645, -0.62750685, 0.5265408, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 150.0
+
+[node name="Track" type="CSGCombiner3D" parent="." unique_id=1230224112]
+use_collision = true
+
+[node name="Ground" type="CSGBox3D" parent="Track" unique_id=1885013282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -70)
+size = Vector3(160, 2, 240)
+material = SubResource("GroundMat")
+
+[node name="WallNorth" type="CSGBox3D" parent="Track" unique_id=742641563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -190)
+size = Vector3(160, 1.5, 1)
+material = SubResource("WallMat")
+
+[node name="WallSouth" type="CSGBox3D" parent="Track" unique_id=1367108860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 50)
+size = Vector3(160, 1.5, 1)
+material = SubResource("WallMat")
+
+[node name="WallWest" type="CSGBox3D" parent="Track" unique_id=866245701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0.75, -70)
+size = Vector3(1, 1.5, 240)
+material = SubResource("WallMat")
+
+[node name="WallEast" type="CSGBox3D" parent="Track" unique_id=502056515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80, 0.75, -70)
+size = Vector3(1, 1.5, 240)
+material = SubResource("WallMat")
+
+[node name="SmallBumps" type="CSGCombiner3D" parent="Track" unique_id=1815596123]
+
+[node name="Rumble01" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=323209868]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -10)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble02" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=1255788168]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -10.5)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble03" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=1134637240]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -11)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble04" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=376603813]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -11.5)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble05" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=1825824244]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -12)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble06" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=1566010666]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -12.5)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble07" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=550418072]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -13)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble08" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=1730058100]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -13.5)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble09" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=767848608]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -14)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="Rumble10" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=135576558]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.03, -14.5)
+radius = 0.06
+height = 6.0
+sides = 12
+material = SubResource("BumpMat")
+
+[node name="SpeedBump8cm" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=877838836]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.27, -24)
+radius = 0.35
+height = 6.0
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="SpeedBump12cm" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=693076692]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.23, -30)
+radius = 0.35
+height = 6.0
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="SpeedBump16cm" type="CSGCylinder3D" parent="Track/SmallBumps" unique_id=1154519310]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.19, -36)
+radius = 0.35
+height = 6.0
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="SharpEdge5cm" type="CSGBox3D" parent="Track/SmallBumps" unique_id=1010843829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -48)
+size = Vector3(6, 0.1, 0.25)
+material = SubResource("BumpMat")
+
+[node name="SharpEdge8cm" type="CSGBox3D" parent="Track/SmallBumps" unique_id=2139965614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -54)
+size = Vector3(6, 0.16, 0.25)
+material = SubResource("BumpMat")
+
+[node name="SharpEdge12cm" type="CSGBox3D" parent="Track/SmallBumps" unique_id=1339098050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -60)
+size = Vector3(6, 0.24, 0.25)
+material = SubResource("BumpMat")
+
+[node name="Cobble01" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=529040424]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, -0.1, -70.5)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble02" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=1467324069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, -0.1, -71.2)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble03" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=506000282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, -0.1, -72.8)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble04" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=1768328030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.1, -73.5)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble05" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=1802086539]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, -0.1, -75.1)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble06" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=1168500817]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, -0.1, -75.9)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble07" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=943752219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.1, -77.4)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble08" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=1852294085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -0.1, -78.6)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble09" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=652749970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1, -0.1, -79.3)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble10" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=1192644771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, -0.1, -80.7)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble11" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=2033117964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -0.1, -81.8)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble12" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=1300308010]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, -0.1, -83)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble13" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=782425957]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4, -0.1, -84.1)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="Cobble14" type="CSGSphere3D" parent="Track/SmallBumps" unique_id=651474047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, -0.1, -85.2)
+radius = 0.18
+material = SubResource("BumpMat")
+
+[node name="CurbPlateau15cm" type="CSGBox3D" parent="Track/SmallBumps" unique_id=218120155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
+size = Vector3(6, 0.3, 10)
+material = SubResource("BumpMat")
+
+[node name="BigBumps" type="CSGCombiner3D" parent="Track" unique_id=650756616]
+
+[node name="Hump40cm" type="CSGCylinder3D" parent="Track/BigBumps" unique_id=965729982]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -16, -1.1, -12)
+radius = 1.5
+height = 6.0
+sides = 48
+material = SubResource("BumpMat")
+
+[node name="Hump70cm" type="CSGCylinder3D" parent="Track/BigBumps" unique_id=1504940035]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -16, -2.3, -30)
+radius = 3.0
+height = 6.0
+sides = 64
+material = SubResource("BumpMat")
+
+[node name="Log30cm" type="CSGCylinder3D" parent="Track/BigBumps" unique_id=1484111736]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -16, 0, -48)
+radius = 0.3
+height = 6.0
+sides = 24
+material = SubResource("BumpMat")
+
+[node name="MogulA" type="CSGCylinder3D" parent="Track/BigBumps" unique_id=2054207778]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -16, -0.6, -60)
+radius = 1.0
+height = 6.0
+sides = 48
+material = SubResource("BumpMat")
+
+[node name="MogulB" type="CSGCylinder3D" parent="Track/BigBumps" unique_id=1791061272]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -16, -0.6, -63.5)
+radius = 1.0
+height = 6.0
+sides = 48
+material = SubResource("BumpMat")
+
+[node name="StepPlateau25cm" type="CSGBox3D" parent="Track/BigBumps" unique_id=1103244494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, -80)
+size = Vector3(6, 0.5, 8)
+material = SubResource("BumpMat")
+
+[node name="Pits" type="CSGCombiner3D" parent="Track" unique_id=1707457001]
+operation = 2
+
+[node name="Trench15cmNarrow" type="CSGBox3D" parent="Track/Pits" unique_id=383908220]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -10)
+size = Vector3(6, 0.3, 0.3)
+material = SubResource("PitMat")
+
+[node name="Trench20cm" type="CSGBox3D" parent="Track/Pits" unique_id=1531113603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -18)
+size = Vector3(6, 0.4, 0.6)
+material = SubResource("PitMat")
+
+[node name="Trench25cmWide" type="CSGBox3D" parent="Track/Pits" unique_id=238909566]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -27)
+size = Vector3(6, 0.5, 1.2)
+material = SubResource("PitMat")
+
+[node name="Trench30cmLong" type="CSGBox3D" parent="Track/Pits" unique_id=933311736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, -38)
+size = Vector3(6, 0.6, 2.5)
+material = SubResource("PitMat")
+
+[node name="PotholeLeft1" type="CSGBox3D" parent="Track/Pits" unique_id=396138514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -50)
+size = Vector3(1.2, 0.36, 1)
+material = SubResource("PitMat")
+
+[node name="PotholeRight1" type="CSGBox3D" parent="Track/Pits" unique_id=4887860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -56)
+size = Vector3(1.2, 0.36, 1)
+material = SubResource("PitMat")
+
+[node name="PotholeLeft2" type="CSGBox3D" parent="Track/Pits" unique_id=1020512045]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -62)
+size = Vector3(1.4, 0.5, 1.4)
+material = SubResource("PitMat")
+
+[node name="PotholeRight2" type="CSGBox3D" parent="Track/Pits" unique_id=336212716]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, -68)
+size = Vector3(1.4, 0.5, 1.4)
+material = SubResource("PitMat")
+
+[node name="RoundPothole1" type="CSGCylinder3D" parent="Track/Pits" unique_id=713883884]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.2, 0, -78)
+radius = 0.3
+height = 0.3
+sides = 20
+material = SubResource("PitMat")
+
+[node name="RoundPothole2" type="CSGCylinder3D" parent="Track/Pits" unique_id=1486820812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8, 0, -80.5)
+radius = 0.4
+height = 0.3
+sides = 20
+material = SubResource("PitMat")
+
+[node name="RoundPothole3" type="CSGCylinder3D" parent="Track/Pits" unique_id=941423878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6, 0, -83)
+radius = 0.25
+height = 0.3
+sides = 20
+material = SubResource("PitMat")
+
+[node name="RoundPothole4" type="CSGCylinder3D" parent="Track/Pits" unique_id=1685656340]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1, 0, -85.2)
+radius = 0.45
+height = 0.3
+sides = 20
+material = SubResource("PitMat")
+
+[node name="RoundPothole5" type="CSGCylinder3D" parent="Track/Pits" unique_id=464099124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9, 0, -87.5)
+height = 0.3
+sides = 20
+material = SubResource("PitMat")
+
+[node name="RoundPothole6" type="CSGCylinder3D" parent="Track/Pits" unique_id=1338834148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4, 0, -89)
+radius = 0.35
+height = 0.3
+sides = 20
+material = SubResource("PitMat")
+
+[node name="Dip50cm" type="CSGCylinder3D" parent="Track/Pits" unique_id=220671597]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 16, 3.5, -102)
+radius = 4.0
+height = 6.0
+sides = 64
+material = SubResource("PitMat")
+
+[node name="RollTest" type="CSGCombiner3D" parent="Track" unique_id=1199465908]
+
+[node name="OneSideL1" type="CSGCylinder3D" parent="Track/RollTest" unique_id=523415142]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 31, -0.3, -10)
+height = 1.4
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="OneSideR1" type="CSGCylinder3D" parent="Track/RollTest" unique_id=394434989]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 33, -0.3, -16)
+height = 1.4
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="OneSideL2" type="CSGCylinder3D" parent="Track/RollTest" unique_id=215026593]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 31, -0.3, -22)
+height = 1.4
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="OneSideR2" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1933024911]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 33, -0.3, -28)
+height = 1.4
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="OneSideL3" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1754487251]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 31, -0.3, -34)
+height = 1.4
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="OneSideR3" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1135637209]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 33, -0.3, -40)
+height = 1.4
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="BigOneSideL" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1862495463]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 31, -0.8, -52)
+radius = 1.2
+height = 1.4
+sides = 48
+material = SubResource("BumpMat")
+
+[node name="BigOneSideR" type="CSGCylinder3D" parent="Track/RollTest" unique_id=351532441]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 33, -0.8, -60)
+radius = 1.2
+height = 1.4
+sides = 48
+material = SubResource("BumpMat")
+
+[node name="Washboard01" type="CSGCylinder3D" parent="Track/RollTest" unique_id=356006733]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -72)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard02" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1303335099]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -72.8)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard03" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1062606147]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -73.6)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard04" type="CSGCylinder3D" parent="Track/RollTest" unique_id=275808668]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -74.4)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard05" type="CSGCylinder3D" parent="Track/RollTest" unique_id=574283980]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -75.2)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard06" type="CSGCylinder3D" parent="Track/RollTest" unique_id=481006441]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -76)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard07" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1413339034]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -76.8)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard08" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1846216003]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -77.6)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard09" type="CSGCylinder3D" parent="Track/RollTest" unique_id=227810420]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -78.4)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard10" type="CSGCylinder3D" parent="Track/RollTest" unique_id=660721310]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -79.2)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard11" type="CSGCylinder3D" parent="Track/RollTest" unique_id=149891342]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -80)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard12" type="CSGCylinder3D" parent="Track/RollTest" unique_id=573971939]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -80.8)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard13" type="CSGCylinder3D" parent="Track/RollTest" unique_id=702220666]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -81.6)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="Washboard14" type="CSGCylinder3D" parent="Track/RollTest" unique_id=322570977]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 32, -0.07, -82.4)
+radius = 0.15
+height = 6.0
+sides = 16
+material = SubResource("BumpMat")
+
+[node name="DiagonalBumpA" type="CSGCylinder3D" parent="Track/RollTest" unique_id=1306008679]
+transform = Transform3D(-3.5806274e-08, -0.81915206, 0.57357645, 1, -4.371139e-08, 0, 2.5071824e-08, 0.57357645, 0.81915206, 32, -0.22, -95)
+radius = 0.4
+height = 7.0
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="DiagonalBumpB" type="CSGCylinder3D" parent="Track/RollTest" unique_id=716403435]
+transform = Transform3D(-3.5806274e-08, -0.81915206, -0.57357645, 1, -4.371139e-08, 0, -2.5071824e-08, -0.57357645, 0.81915206, 32, -0.22, -103)
+radius = 0.4
+height = 7.0
+sides = 32
+material = SubResource("BumpMat")
+
+[node name="Jumps" type="CSGCombiner3D" parent="Track" unique_id=979397856]
+
+[node name="Tabletop" type="CSGPolygon3D" parent="Track/Jumps" unique_id=705876443]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, 0, -10)
+polygon = PackedVector2Array(0, 0, 8, 1.2, 14, 1.2, 22, 0, 22, -0.3, 0, -0.3)
+depth = 6.0
+material = SubResource("RampMat")
+
+[node name="Kicker" type="CSGPolygon3D" parent="Track/Jumps" unique_id=783667457]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, 0, -42)
+polygon = PackedVector2Array(0, 0, 6, 1, 6, -0.3, 0, -0.3)
+depth = 6.0
+material = SubResource("RampMat")
+
+[node name="Landing" type="CSGPolygon3D" parent="Track/Jumps" unique_id=679150415]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, 0, -51)
+polygon = PackedVector2Array(0, 0.8, 8, 0, 8, -0.3, 0, -0.3)
+depth = 6.0
+material = SubResource("RampMat")
+
+[node name="HillClimb" type="CSGPolygon3D" parent="Track/Jumps" unique_id=950299277]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -29, 0, -75)
+polygon = PackedVector2Array(0, 0, 12, 2.5, 22, 2.5, 34, 0, 34, -0.3, 0, -0.3)
+depth = 6.0
+material = SubResource("RampMat")
+
+[node name="Hill" type="CSGSphere3D" parent="Track" unique_id=185435874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22, -160)
+radius = 25.0
+radial_segments = 48
+rings = 24
+material = SubResource("RampMat")
+
+[node name="Signs" type="Node3D" parent="." unique_id=1015798852]
+
+[node name="SignSmall" type="Label3D" parent="Signs" unique_id=1069182361]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, -4)
+pixel_size = 0.01
+billboard = 1
+text = "SMALL BUMPS
+rumble strip, speed bumps, sharp edges,
+cobbles, 15 cm curb"
+font_size = 64
+outline_size = 16
+
+[node name="SignBig" type="Label3D" parent="Signs" unique_id=1485388289]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 2.2, -4)
+pixel_size = 0.01
+billboard = 1
+text = "BIG BUMPS
+40 / 70 cm humps, 30 cm log,
+moguls, 25 cm step"
+font_size = 64
+outline_size = 16
+
+[node name="SignPits" type="Label3D" parent="Signs" unique_id=489826112]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 2.2, -4)
+pixel_size = 0.01
+billboard = 1
+text = "PITS
+trenches (narrow to wide), potholes,
+round holes, 50 cm dip"
+font_size = 64
+outline_size = 16
+
+[node name="SignRoll" type="Label3D" parent="Signs" unique_id=163659821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 2.2, -4)
+pixel_size = 0.01
+billboard = 1
+text = "ROLL TEST
+one-side bumps, washboard,
+diagonal bumps"
+font_size = 64
+outline_size = 16
+
+[node name="SignJumps" type="Label3D" parent="Signs" unique_id=503010487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 2.2, -4)
+pixel_size = 0.01
+billboard = 1
+text = "JUMPS
+tabletop, kicker + landing,
+hill climb"
+font_size = 64
+outline_size = 16
+
+[node name="Car" parent="." unique_id=1766986804 instance=ExtResource("1_vehicle")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 15)
+
+[node name="AIDriver" type="Node" parent="Car" unique_id=1792519570 node_paths=PackedStringArray("vehicle", "path")]
+script = ExtResource("14_ai")
+vehicle = NodePath("../../Truck")
+path = NodePath("../../Roads/RoadOuter")
+
+[node name="Truck" parent="." unique_id=1582386402 instance=ExtResource("5_truck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1.3, 15)
+show_preview_helpers = false
+preview_opacity = 0.3
+live_update = false
+
+[node name="Truck2" parent="." unique_id=1534743091 instance=ExtResource("5_truck")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.04373, 1.3, 15)
+
+[node name="Trailer" parent="." unique_id=1706553756 instance=ExtResource("8_trailer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.62, 24)
+use_player_input = true
+
+[node name="Character" parent="." unique_id=1530015964 instance=ExtResource("9_character")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0.1, 17)
+
+[node name="ChaseCamera" type="Camera3D" parent="." unique_id=1470078505 node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 22)
+fov = 70.0
+script = ExtResource("2_camera")
+target = NodePath("../Character")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=20322701]
+
+[node name="HUD" type="Control" parent="UI" unique_id=1264207599 node_paths=PackedStringArray("vehicle", "camera", "tow_manager", "switcher")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_hud")
+vehicle = NodePath("../../Car")
+camera = NodePath("../../ChaseCamera")
+tow_manager = NodePath("../../TowManager")
+switcher = NodePath("../../VehicleSwitcher")
+
+[node name="VehicleSwitcher" type="Node" parent="." unique_id=1972480496 node_paths=PackedStringArray("vehicles", "camera", "hud", "character")]
+script = ExtResource("6_switcher")
+vehicles = [NodePath("../Car"), NodePath("../Truck"), NodePath("../Truck2"), NodePath("../Trailer"), NodePath("../Pickup")]
+camera = NodePath("../ChaseCamera")
+hud = NodePath("../UI/HUD")
+character = NodePath("../Character")
+
+[node name="TowManager" type="Node" parent="." unique_id=174395470 node_paths=PackedStringArray("switcher", "trailers")]
+script = ExtResource("7_tow")
+switcher = NodePath("../VehicleSwitcher")
+trailers = [NodePath("../Trailer")]
+
+[node name="VehicleSpawner" type="Node" parent="." unique_id=1378568871 node_paths=PackedStringArray("switcher", "tow_manager")]
+script = ExtResource("10_spawner")
+switcher = NodePath("../VehicleSwitcher")
+tow_manager = NodePath("../TowManager")
+
+[node name="Pickup" type="RigidBody3D" parent="." unique_id=1545855755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.3801184, 0.5762273, 0)
+script = ExtResource("11_rskw5")
+definition = ExtResource("12_dt4c4")
+
+[node name="Roads" type="Node3D" parent="." unique_id=1130998694]
+
+[node name="RoadOuter" type="Path3D" parent="Roads" unique_id=1605223380]
+curve = SubResource("Curve3D_outer")
+script = ExtResource("13_road")
+
+[node name="RoadLink" type="Path3D" parent="Roads" unique_id=461325364]
+curve = SubResource("Curve3D_link")
+script = ExtResource("13_road")
+
+[node name="RoadWest" type="Path3D" parent="Roads" unique_id=435988568]
+curve = SubResource("Curve3D_west")
+script = ExtResource("13_road")
+
+[node name="RoadEast" type="Path3D" parent="Roads" unique_id=1972425795]
+curve = SubResource("Curve3D_east")
+script = ExtResource("13_road")
+
+[node name="Crossroads1" type="Node3D" parent="Roads" unique_id=173711228]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, -20)
+script = ExtResource("16_junction")
+
+[node name="Crossroads2" type="Node3D" parent="Roads" unique_id=1644364498]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 55, 0, -80)
+script = ExtResource("16_junction")
+
+[node name="AIDriverToggle" type="Node" parent="." unique_id=255115873 node_paths=PackedStringArray("driver", "switcher")]
+script = ExtResource("15_toggle")
+driver = NodePath("../Car/AIDriver")
+switcher = NodePath("../VehicleSwitcher")

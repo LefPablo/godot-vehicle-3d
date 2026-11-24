@@ -1,0 +1,143 @@
+[gd_resource type="Resource" script_class="VehicleDefinition" format=3 uid="uid://cia66y1plrs72"]
+
+[ext_resource type="Script" uid="uid://dixb1yrtbw2us" path="res://addons/vehicle_system/config/vehicle_brake_config.gd" id="1_jhd7p"]
+[ext_resource type="Script" uid="uid://dqlfa7en1skt4" path="res://addons/vehicle_system/config/vehicle_cargo_space.gd" id="2_m1idx"]
+[ext_resource type="Script" uid="uid://cchm1k6aoe4up" path="res://addons/vehicle_system/config/vehicle_collider_config.gd" id="3_h5twc"]
+[ext_resource type="Script" uid="uid://bpo1hdnnf5des" path="res://addons/vehicle_system/config/vehicle_engine_config.gd" id="4_kuq0d"]
+[ext_resource type="PackedScene" path="res://vehicles/trailer/trailer_body.tscn" id="5_cfyi7"]
+[ext_resource type="Script" uid="uid://c0uc6dafevbdy" path="res://addons/vehicle_system/config/vehicle_mount_point.gd" id="6_ktlsy"]
+[ext_resource type="Script" uid="uid://clmmpdiohuc3g" path="res://addons/vehicle_system/config/vehicle_definition.gd" id="7_oevo8"]
+[ext_resource type="Script" uid="uid://bkgpafp2dy0eg" path="res://addons/vehicle_system/config/vehicle_steering_config.gd" id="8_vg3wc"]
+[ext_resource type="Script" uid="uid://da6ciycyan7kr" path="res://addons/vehicle_system/config/vehicle_wheel_config.gd" id="9_77gw2"]
+[ext_resource type="Script" uid="uid://cba6kf4pyj5qv" path="res://addons/vehicle_system/config/vehicle_suspension_config.gd" id="10_6rqqx"]
+[ext_resource type="Script" uid="uid://b7ch7ipu7jd11" path="res://addons/vehicle_system/config/vehicle_tire_config.gd" id="11_585fx"]
+[ext_resource type="Script" uid="uid://bbob2vxpkp5qn" path="res://addons/vehicle_system/config/vehicle_cargo_load.gd" id="12_load"]
+
+[sub_resource type="Resource" id="Resource_0lhcg"]
+script = ExtResource("1_jhd7p")
+brake_force = 1500.0
+handbrake_force = 3000.0
+
+[sub_resource type="Resource" id="Resource_cargo_load"]
+script = ExtResource("12_load")
+rows = 4
+extra_top_boxes = 2
+random_seed = 21
+
+[sub_resource type="Resource" id="Resource_6fmlv"]
+script = ExtResource("2_m1idx")
+position = Vector3(0, 0.09, 0)
+size = Vector3(1.8, 0.45, 2.84)
+max_mass = 750.0
+accepted_tags = PackedStringArray()
+open_top = true
+max_overhang_height = 1.95
+initial_load = SubResource("Resource_cargo_load")
+
+[sub_resource type="Resource" id="Resource_f51x0"]
+script = ExtResource("3_h5twc")
+name = "FloorCollision"
+position = Vector3(0, 0.05, 0)
+size = Vector3(1.98, 0.08, 3)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_h4bl0"]
+script = ExtResource("3_h5twc")
+name = "SideLCollision"
+position = Vector3(-0.95, 0.315, 0)
+size = Vector3(0.08, 0.45, 3)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_s6gkr"]
+script = ExtResource("3_h5twc")
+name = "SideRCollision"
+position = Vector3(0.95, 0.315, 0)
+size = Vector3(0.08, 0.45, 3)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_g7o6s"]
+script = ExtResource("3_h5twc")
+name = "FrontCollision"
+position = Vector3(0, 0.315, -1.46)
+size = Vector3(1.98, 0.45, 0.08)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_rvd78"]
+script = ExtResource("3_h5twc")
+name = "TailCollision"
+position = Vector3(0, 0.315, 1.46)
+size = Vector3(1.98, 0.45, 0.08)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_bwyfu"]
+script = ExtResource("3_h5twc")
+name = "DrawbarCollision"
+position = Vector3(0, 0.04, -2.25)
+size = Vector3(0.12, 0.1, 1.5)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_5nx61"]
+script = ExtResource("3_h5twc")
+name = "JackCollision"
+position = Vector3(0, -0.215, -2.7)
+size = Vector3(0.12, 0.43, 0.12)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_43q0k"]
+script = ExtResource("4_kuq0d")
+engine_force = 2200.0
+
+[sub_resource type="Resource" id="Resource_a7mhb"]
+script = ExtResource("6_ktlsy")
+kind = 2
+position = Vector3(0, 0.09, -3.05)
+marker_size = Vector3(0.16, 0.12, 0.22)
+
+[sub_resource type="Resource" id="Resource_736h8"]
+script = ExtResource("8_vg3wc")
+
+[sub_resource type="Resource" id="Resource_wd4vy"]
+script = ExtResource("10_6rqqx")
+travel = 0.3
+spring_stiffness = 26000.0
+damping_compression = 1700.0
+damping_rebound = 2400.0
+
+[sub_resource type="Resource" id="Resource_q62d0"]
+script = ExtResource("11_585fx")
+friction = 1.1
+
+[sub_resource type="Resource" id="Resource_k17da"]
+script = ExtResource("9_77gw2")
+name = "WheelL"
+position = Vector3(-1.1, 0, 0.15)
+mirror = true
+radius = 0.33
+width = 0.22
+steering = true
+drive = true
+handbrake = true
+suspension = SubResource("Resource_wd4vy")
+tire = SubResource("Resource_q62d0")
+
+[resource]
+script = ExtResource("7_oevo8")
+id = "trailer"
+display_name = "Trailer"
+category = "trailer"
+description = "Engine force comes from the demo, where the trailer could be driven around on its own for testing. Set it to 0 for a real trailer."
+player_controllable = false
+model = ExtResource("5_cfyi7")
+mass = 450.0
+center_of_mass = Vector3(0, 0.05, -0.35)
+body_friction = 0.8
+colliders = Array[ExtResource("3_h5twc")]([SubResource("Resource_f51x0"), SubResource("Resource_h4bl0"), SubResource("Resource_s6gkr"), SubResource("Resource_g7o6s"), SubResource("Resource_rvd78"), SubResource("Resource_bwyfu"), SubResource("Resource_5nx61")])
+anti_roll_stiffness = 6000.0
+air_drag = 0.3
+engine = SubResource("Resource_43q0k")
+brakes = SubResource("Resource_0lhcg")
+steering = SubResource("Resource_736h8")
+wheels = Array[ExtResource("9_77gw2")]([SubResource("Resource_k17da")])
+mount_points = Array[ExtResource("6_ktlsy")]([SubResource("Resource_a7mhb")])
+cargo_spaces = Array[ExtResource("2_m1idx")]([SubResource("Resource_6fmlv")])
+camera_distance = 9.0

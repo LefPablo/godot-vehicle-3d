@@ -1,0 +1,90 @@
+[gd_resource type="Resource" script_class="VehicleDefinition" format=3 uid="uid://dr8nmkg1k836v"]
+
+[ext_resource type="Script" uid="uid://dixb1yrtbw2us" path="res://addons/vehicle_system/config/vehicle_brake_config.gd" id="1_oxq02"]
+[ext_resource type="Script" uid="uid://dqlfa7en1skt4" path="res://addons/vehicle_system/config/vehicle_cargo_space.gd" id="2_1f3pj"]
+[ext_resource type="Script" uid="uid://cchm1k6aoe4up" path="res://addons/vehicle_system/config/vehicle_collider_config.gd" id="2_qmyaf"]
+[ext_resource type="Script" uid="uid://bpo1hdnnf5des" path="res://addons/vehicle_system/config/vehicle_engine_config.gd" id="3_1f3pj"]
+[ext_resource type="PackedScene" path="res://vehicles/car/car_body.tscn" id="4_a1k21"]
+[ext_resource type="Script" uid="uid://c0uc6dafevbdy" path="res://addons/vehicle_system/config/vehicle_mount_point.gd" id="5_1elhh"]
+[ext_resource type="Script" uid="uid://clmmpdiohuc3g" path="res://addons/vehicle_system/config/vehicle_definition.gd" id="6_euxuo"]
+[ext_resource type="Script" uid="uid://bkgpafp2dy0eg" path="res://addons/vehicle_system/config/vehicle_steering_config.gd" id="7_hetsf"]
+[ext_resource type="Script" uid="uid://da6ciycyan7kr" path="res://addons/vehicle_system/config/vehicle_wheel_config.gd" id="8_s4ey1"]
+[ext_resource type="Script" uid="uid://cba6kf4pyj5qv" path="res://addons/vehicle_system/config/vehicle_suspension_config.gd" id="9_vofd7"]
+[ext_resource type="Script" uid="uid://b7ch7ipu7jd11" path="res://addons/vehicle_system/config/vehicle_tire_config.gd" id="10_vq6vj"]
+
+[sub_resource type="Resource" id="Resource_gektg"]
+script = ExtResource("1_oxq02")
+
+[sub_resource type="Resource" id="Resource_2vxnx"]
+script = ExtResource("2_qmyaf")
+name = "ChassisCollision"
+position = Vector3(0, 0.15, 0)
+size = Vector3(1.7, 0.5, 4)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_7yq01"]
+script = ExtResource("2_qmyaf")
+name = "CabinCollision"
+position = Vector3(0, 0.65, 0.2)
+size = Vector3(1.5, 0.5, 2)
+points = PackedVector3Array()
+
+[sub_resource type="Resource" id="Resource_7d0km"]
+script = ExtResource("3_1f3pj")
+
+[sub_resource type="Resource" id="Resource_qse3g"]
+script = ExtResource("5_1elhh")
+kind = 0
+position = Vector3(0, 0.02, -2.07)
+marker_size = Vector3(0.12, 0.1, 0.14)
+
+[sub_resource type="Resource" id="Resource_1e06l"]
+script = ExtResource("5_1elhh")
+kind = 1
+position = Vector3(0, 0.02, 2.07)
+marker_size = Vector3(0.12, 0.1, 0.14)
+
+[sub_resource type="Resource" id="Resource_0o1kf"]
+script = ExtResource("5_1elhh")
+kind = 3
+position = Vector3(-1.5, 0, -0.2)
+
+[sub_resource type="Resource" id="Resource_6ae8j"]
+script = ExtResource("7_hetsf")
+
+[sub_resource type="Resource" id="Resource_h5tn8"]
+script = ExtResource("9_vofd7")
+
+[sub_resource type="Resource" id="Resource_lx5at"]
+script = ExtResource("10_vq6vj")
+
+[sub_resource type="Resource" id="Resource_fe7mj"]
+script = ExtResource("8_s4ey1")
+name = "WheelFL"
+position = Vector3(-0.98, 0, -1.35)
+mirror = true
+steering = true
+suspension = SubResource("Resource_h5tn8")
+tire = SubResource("Resource_lx5at")
+
+[sub_resource type="Resource" id="Resource_t5yij"]
+script = ExtResource("8_s4ey1")
+name = "WheelRL"
+position = Vector3(-0.98, 0, 1.3)
+mirror = true
+drive = true
+handbrake = true
+suspension = SubResource("Resource_h5tn8")
+tire = SubResource("Resource_lx5at")
+
+[resource]
+script = ExtResource("6_euxuo")
+id = "car"
+display_name = "Car"
+model = ExtResource("4_a1k21")
+colliders = Array[ExtResource("2_qmyaf")]([SubResource("Resource_2vxnx"), SubResource("Resource_7yq01")])
+engine = SubResource("Resource_7d0km")
+brakes = SubResource("Resource_gektg")
+steering = SubResource("Resource_6ae8j")
+wheels = Array[ExtResource("8_s4ey1")]([SubResource("Resource_fe7mj"), SubResource("Resource_t5yij")])
+mount_points = Array[ExtResource("5_1elhh")]([SubResource("Resource_qse3g"), SubResource("Resource_1e06l"), SubResource("Resource_0o1kf")])
